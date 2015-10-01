@@ -63,7 +63,7 @@ public class EventHandler implements InitializingBean, DisposableBean{
     }
 
     @EventListener
-    public void onIssueEvent(IssueEvent issueEvent) {
+    public void onIssueEvent(IssueEvent issueEvent) throws Exception{
         Long eventTypeId = issueEvent.getEventTypeId();
         Issue issue = issueEvent.getIssue();
 
@@ -78,7 +78,7 @@ public class EventHandler implements InitializingBean, DisposableBean{
         }
     }
 
-    public static void onIssueCreate(Issue issue) {
+    public static void onIssueCreate(Issue issue) throws Exception{
         // Check for proper event
         for (Map<String, String> event : model) {
             String projectName = event.get("project");
@@ -95,7 +95,7 @@ public class EventHandler implements InitializingBean, DisposableBean{
         }
     }
 
-    public static void onIssueClose(Issue issue) {
+    public static void onIssueClose(Issue issue) throws Exception{
 
         // Check for proper event
         for (Map<String, String> event : model) {
@@ -118,7 +118,7 @@ public class EventHandler implements InitializingBean, DisposableBean{
      * @param event
      * @param issue
      */
-    public static void doEventAction(Map<String, String> event, Issue issue) {
+    public static void doEventAction(Map<String, String> event, Issue issue) throws Exception{
         String action = event.get("eventAction");
         if (action.equals("create-issue")) {
             event.put("parentId", issue.getId().toString()); // put current issue id to parentId, which will be referred by child node
@@ -153,7 +153,7 @@ public class EventHandler implements InitializingBean, DisposableBean{
         issueClient.saveValue((MutableIssue) issue, data.get("parentId"), issueClient.getCustomField("Parent Issue ID"));
     }
 
-    public static void closeIssue(Map<String, String> data, Issue issue) {
+    public static void closeIssue(Map<String, String> data, Issue issue) throws Exception{
         Long parentIssueId = Long.parseLong((String) issue.getCustomFieldValue(issueClient.getCustomField("Parent Issue ID")));
         Issue parentIssue = issueClient.getIssue(parentIssueId);
         issueClient.transitionIssue(parentIssue, parentIssueId, issueClient.getActionId(parentIssue, data.get("closeActionName")));

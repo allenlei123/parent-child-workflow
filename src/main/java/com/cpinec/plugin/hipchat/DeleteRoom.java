@@ -2,7 +2,6 @@ package com.cpinec.plugin.hipchat;
 
 import com.atlassian.jira.util.json.JSONObject;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.entity.StringEntity;
@@ -71,7 +70,7 @@ public class DeleteRoom extends ApiRequest{
         return this;
     }
 
-    public void sendRequest(HttpClient client) throws ClientProtocolException, IOException {
+    public void sendRequest(HttpClient client) throws IOException {
 
         // Execute the request
         HttpResponse response = client.execute(delete);

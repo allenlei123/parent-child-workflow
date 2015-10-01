@@ -48,7 +48,7 @@ public class IssueClient {
         return jAC.getUser().getKey();
     }
 
-    public int getActionId(Issue issue, String actionName) {
+    public int getActionId(Issue issue, String actionName) throws Exception{
         int result = -1;
         IssueWorkflowManager issueWFMngr = ComponentAccessor.getComponentOfType(IssueWorkflowManager.class);
         Collection<ActionDescriptor> coll = issueWFMngr.getAvailableActions(issue, jAC.getUser());
@@ -58,6 +58,11 @@ public class IssueClient {
                 break;
             }
         }
+
+        if (result == -1){
+            throw new Exception("Parent issue to this one is not initialized, please close this workflow later.");
+        }
+
         log.info("Action id " + actionName + ": " + Integer.toString(result));
         return result;
     }
