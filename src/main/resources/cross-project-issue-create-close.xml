@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	1. Define when a new issue is created, what sub-issues to be created and what hipchat rooms to be created, which users to be
+	   added to that room
+	2. Define when a sub-issue is closed, which issue to be closed and which hipchat rooms to be closed
+	3.
+-->
+
+<cross-project-issue-create-close>
+    <project name="SD1">
+        <on-create-issue>
+            <create-issue>
+                <issue projectName="Bidding" issueType="Logistic-Bidding" issueId="" parentId="" prefix="BID"/>
+                <issue projectName="Settlings" issueType="Logistic-Settling" issueId="" parentId="" prefix="SETTLE"/>
+            </create-issue>
+            <create-chatroom>
+                <chatroom roomId="" roomType="Logistic-process" parentId="" prefix="LP_3"/>
+            </create-chatroom>
+        </on-create-issue>
+    </project>
+
+    <project name="Bidding">
+        <on-close-issue>
+            <create-issue>
+                <issue projectName="Insurance" issueType="Logistic-Insurance" issueId="" parentId="" prefix="INS"/>
+            </create-issue>
+            <create-chatroom>
+                <chatroom roomId="" roomType="Logistic-Insurance" parentId="" prefix="INS_3"/>
+            </create-chatroom>
+        </on-close-issue>
+    </project>
+
+    <project name="Settlings">
+        <on-close-issue>
+            <close-chatroom>
+                <chatroom roomId="" roomType="Logistic-process" parentId="" prefix="LP_3"/>
+            </close-chatroom>
+            <close-issue>
+                <issue projectName="SD1" description="parent" issueId="" parentId="" prefix="SD1" closeActionName="Finish"/>
+            </close-issue>
+        </on-close-issue>
+    </project>
+
+    <project name="Insurance">
+    </project>
+</cross-project-issue-create-close>
