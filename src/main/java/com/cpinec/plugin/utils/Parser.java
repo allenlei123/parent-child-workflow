@@ -51,6 +51,11 @@ public class Parser {
         }
     }
 
+    /**
+     * for each leaf, there is a list of each step recorded in model.
+     * when an issue event comes, it iterates issue's project and its event type, then execute associated children issues creation.
+     * @return
+     */
     public static List<Map<String, String>> buildModel() {
         List<Map<String, String>> model = new ArrayList<Map<String, String>>();
 
